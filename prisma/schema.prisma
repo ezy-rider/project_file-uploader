@@ -9,13 +9,13 @@ datasource db {
 }
 
 model User {
-  id Int @default(autoincrement())
+  id Int @id @default(autoincrement())
   name String @unique
   password String
 }
 
 model Session {
-  id Int @id
+  id String @id
   sid String @unique
   data String
   expiresAt DateTime

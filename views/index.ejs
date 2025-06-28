@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Log In</title>
+  </head>
+  <body>
+    <% if (locals.currentUser) {%>
+    <h1>WELCOME BACK <%= currentUser.name %></h1>
+    <form action="/log-out" method="POST">
+      <button type="submit">LOG OUT</button>
+    </form>
+    <% } else { %>
+    <h1>Hello, to continue, please, log in or create an account.</h1>
+    <p><a href="/sign-up">Sign Up</a></p>
+    <p><a href="/log-in">Log in</a></p>
+    <%}%>
+  </body>
+</html>
