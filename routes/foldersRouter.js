@@ -9,30 +9,37 @@ foldersRouter.get("/", controller.foldersGet);
 foldersRouter.get("/add", controller.addFolderGet);
 foldersRouter.post("/add", controller.addFolderPost);
 
-foldersRouter.get("/:id/upload", ensureAuthenticated, controller.uploadGet);
+foldersRouter.get(
+  "/:folderId/upload",
+  ensureAuthenticated,
+  controller.uploadGet
+);
 
 foldersRouter.post(
-  "/:id/upload",
+  "/:folderId/upload",
   ensureAuthenticated,
   upload.single("file"),
   controller.uploadPost
 );
 
 foldersRouter.post(
-  "/:id/delete",
+  "/:folderId/delete",
   ensureAuthenticated,
   controller.deleteFolderPost
 );
 foldersRouter.get(
-  "/:id/update",
+  "/:folderId/update",
   ensureAuthenticated,
   controller.updateFolderGet
 );
 foldersRouter.post(
-  "/:id/update",
+  "/:folderId/update",
   ensureAuthenticated,
   controller.updateFolderPost
 );
 
-foldersRouter.get("/:id", controller.folderGet);
+foldersRouter.get("/:folderId", controller.folderGet);
+foldersRouter.get("/:folderId/:fileId", controller.fileGet);
+
+foldersRouter.get("/:folderId/:fileId/download", controller.downloadFileGet);
 // foldersRouter.post("/:", controller.addFolderPost);

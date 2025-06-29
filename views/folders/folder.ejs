@@ -19,7 +19,10 @@
     <% if(folder.files.length > 0) { %>
     <ul>
       <% folder.files.map((file) => { %>
-      <li><%= file.name %></li>
+      <li>
+        <span><%= file.name %></span><br />
+        <a href="/folders/<%= folder.id  %>/<%= file.id %>">view properties</a>
+      </li>
       <% }) %>
     </ul>
     <% } else { %>
