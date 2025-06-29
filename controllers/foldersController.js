@@ -1,9 +1,12 @@
 import { formatBytes } from "../lib/formatBytes.js";
 import { prisma } from "../lib/prisma.js";
+import { supabase } from "../lib/supabase.js";
 
 export async function foldersGet(req, res, next) {
   try {
-    const foldersLinks = await prisma.folder.findMany();
+    const foldersLinks = await prisma.folder.findMany({
+      where: { userId: req.user.id },
+    });
     console.log(foldersLinks);
     res.render("folders/folders", { foldersLinks: foldersLinks });
   } catch (err) {
@@ -17,9 +20,11 @@ export function addFolderGet(req, res) {
 
 export async function addFolderPost(req, res, next) {
   const folderName = req.body.name;
+  const userId = req.user.id;
+
   try {
     await prisma.folder.create({
-      data: { name: folderName },
+      data: { name: folderName, userId: userId },
     });
   } catch (err) {
     next(err);
@@ -44,23 +49,41 @@ export function uploadGet(req, res) {
 }
 
 export async function uploadPost(req, res, next) {
-  console.log("Uploaded file:", req.file);
-
   const folderId = Number(req.params.folderId);
   const file = req.file;
 
   try {
+    const { data, error } = await supabase.storage
+      .from("uploads")
+      .upload(`${folderId}/${file.originalname}`, file.buffer, {
+        contentType: file.mimetype,
+        upsert: false,
+      });
+
+    if (error) throw error;
+
+    const { data: urlData, error: urlError } = supabase.storage
+      .from("uploads")
+      .getPublicUrl(data.path);
+
+    if (urlError) throw urlError;
+
+    const publicUrl = urlData.publicUrl;
+
     await prisma.file.create({
       data: {
         name: file.originalname,
-        path: file.path,
+        path: publicUrl,
         folderId: folderId,
         size: formatBytes(file.size),
       },
     });
 
+    console.log(`/folders/${req.params.folderId}`);
     res.redirect(`/folders/${req.params.folderId}`);
   } catch (err) {
+    console.error("Upload error:", err);
+
     next(err);
   }
 }

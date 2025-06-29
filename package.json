@@ -5,6 +5,7 @@
   "type": "module",
   "dependencies": {
     "@quixo3/prisma-session-store": "^3.1.13",
+    "@supabase/supabase-js": "^2.50.2",
     "bcryptjs": "^3.0.2",
     "dotenv": "^17.0.0",
     "ejs": "^3.1.10",
