@@ -21,3 +21,17 @@ model Session {
   expiresAt DateTime
 }
 
+model Folder {
+  id Int @id @default(autoincrement())
+  name String @unique
+  files File[]
+}
+
+model File {
+  id Int @id @default(autoincrement())
+  name String
+  path String
+  folder Folder @relation(fields: [folderId], references: [id], onDelete: Cascade)
+  folderId Int
+}
+

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Drive - <%= folder.name %></title>
+  </head>
+  <body>
+    <p><a href="/folders">back to folders</a></p>
+    <div style="display: flex; gap: 20px; align-items: center">
+      <h1><%= folder.name %></h1>
+      <div style="display: flex; gap: 10px">
+        <form action="/folders/<%= folder.id %>/delete" method="POST">
+          <button>delete</button>
+        </form>
+        <a href="/folders/<%= folder.id %>/update">update</a>
+      </div>
+    </div>
+    <% if(folder.files.length > 0) { %>
+    <ul>
+      <% folder.files.map((file) => { %>
+      <li><%= file.name %></li>
+      <% }) %>
+    </ul>
+    <% } else { %>
+    <p>No files for now</p>
+    <% } %>
+    <p><a href="/folders/<%= folder.id %>/upload">Upload file</a></p>
+  </body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Drive - upload a file</title>
+  </head>
+  <body>
+    <h1>Upload a file</h1>
+    <p><a href="/">Bach to homepage</a></p>
+    <form
+      action="/folders/<%= id %>/upload"
+      method="POST"
+      enctype="multipart/form-data"
+    >
+      <input type="file" name="file" />
+      <button type="submit">Upload</button>
+    </form>
+    <% if (message) { %>
+    <p><%= message %></p>
+    <% } %>
+  </body>
+</html>

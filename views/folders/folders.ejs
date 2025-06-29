@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Folders</title>
+  </head>
+  <body>
+    <a href="/">Back to homepage</a>
+
+    <h1>Folders</h1>
+    <% if (foldersLinks.length > 0) { %> <% foldersLinks.map(link => { %>
+    <p><a href="/folders/<%= link.id %>"> <%= link.name %> </a></p>
+
+    <% }) %> <% } else { %>
+    <p>There is no folders for now, you can add some</p>
+    <% } %>
+    <br />
+    <br />
+    <a href="/folders/add">Add folder</a>
+  </body>
+</html>
